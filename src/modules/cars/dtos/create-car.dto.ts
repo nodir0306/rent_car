@@ -1,22 +1,28 @@
-import { IsNumber, IsString } from "class-validator";
+import { IsIn, IsInt, IsNotEmpty, IsNumber, IsString } from "class-validator";
 import { createCarRequests } from "../interfaces";
 
 export class CreateCarDto implements createCarRequests {
     @IsString()
+    @IsNotEmpty()
     brand: string;
 
+    @IsNotEmpty()
     @IsString()
     model: string;
 
-    @IsNumber()
+    @IsNotEmpty()
+    @IsInt()
     year: number;
 
-    @IsNumber()
+    @IsNotEmpty()
+    @IsInt()
     price: number;
 
+    @IsNotEmpty()
     @IsNumber()
     milage: number;
 
+    @IsNotEmpty()
     @IsString()
     color: string;
 }

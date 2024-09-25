@@ -14,6 +14,7 @@ export class ExceptionHandleFilter implements ExceptionFilter {
     const request = ctx.getRequest<Request>();
     const response = ctx.getResponse<Response>();
     const requestsTime = new Date().toISOString();
+    console.log(exception.message)
     if (exception instanceof ValidationError) {
       console.log(exception);
       response.status(404).json({
