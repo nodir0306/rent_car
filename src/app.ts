@@ -10,6 +10,10 @@ import databaseConfig from './config/database.config';
       load: [databaseConfig]
     }),
     CarsModule],
+
+    providers: [
+      
+    ]
   
 })
 export class AppModule {}

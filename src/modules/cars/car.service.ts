@@ -1,7 +1,7 @@
-import { HttpException, Injectable, NotFoundException,} from "@nestjs/common";
+import { HttpException, Injectable, InternalServerErrorException, NotFoundException,} from "@nestjs/common";
 import { PgService } from "src/postgres/pg.service";
 import { createCarRequests, updateCarRequests } from "./interfaces";
-import { UpdateCarDto } from "./dtos";
+
 import { allGetFormatter } from "src/utils/api.feture";
 export declare interface Car {
     id: number,
@@ -32,10 +32,11 @@ export class CarsService {
     async getAllCar(queryies: Record<string, string>): Promise<any>{
         try {
             const query = new allGetFormatter('cars')
-            .paginate(+queryies.page, +queryies.limit)
-            .limitFields(queryies?.fields ? queryies.fields.split(',') : ['*'])
-            .sort("year", "DESC")
-            .getQuery();
+            .paginate(+queryies?.page ? +queryies?.page : 1, +queryies?.limit ? +queryies?.limit : 10)
+            .limitFields(queryies?.fields ? queryies?.fields.split(',') : ['*'])
+            .sort(queryies?.sort)
+            .getQuery()
+
       
           const data = await this.postgres.fetchData(query.queryString);
           return {

@@ -32,14 +32,30 @@ export class allGetFormatter {
     return this;
   }
 
-  filter() {}
+  filter(queries: Record<string,any>) {
+    const allQuery = {...queries}
+    const excludedFields = ["limit","page", "sort","fields"]
+    excludedFields.forEach((exf)=> delete allQuery[exf])
+    console.log(allQuery)
+
+    this.#_filterOptions.filters =  {
+      name: 'O\'tgan kunlar',
+      rating: "BETWENN 3 AND 5"
+    }
+  }
 
   limitFields(selectedFields: string[]) {
     this.#_filterOptions.fields = selectedFields;
     return this;
   }
 
-  sort(sortField: string, sortOrder: SortOrderType = 'ASC') {
+  sort(sortField: string = this.#_filterOptions.sort) {
+    let sortOrder: SortOrderType = 'ASC'
+    if(sortField.at(0) == '-'){
+      sortField = sortField.slice(1,sortField.length)
+      sortOrder = 'DESC'
+    }
+    
     this.#_filterOptions.sort = sortField;
     this.#_filterOptions.sortOrder = sortOrder;
     return this;

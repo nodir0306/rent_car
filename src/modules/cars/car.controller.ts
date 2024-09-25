@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseFilters } from "@nestjs/common";
 import { CarsService } from "./car.service";
-import { createCarDto, UpdateCarDto } from "./dtos";
+import { CreateCarDto, UpdateCarDto } from "./dtos";
+import { ExceptionHandleFilter } from "src/filters";
 
 
 @Controller("cars")
@@ -9,9 +10,10 @@ export class CarsController {
     
 
     @Post()
-    async createCar(@Body() createCarData: createCarDto): Promise<any>{
+    async createCar(@Body() createCarData: CreateCarDto): Promise<any>{
         return this.carsService.createCar(createCarData)
     }
+    @UseFilters(ExceptionHandleFilter)
     @Get()
     async getAllCars(@Query() queryies: Record<string, string>): Promise<any[]>{
         return this.carsService.getAllCar(queryies)
