@@ -17,11 +17,7 @@ import { APP_FILTER, APP_PIPE } from '@nestjs/core';
     {
       useClass: ExceptionHandleFilter,
       provide: APP_FILTER,
-    },
-    {
-      useClass: ValidationPipe,
-      provide: APP_PIPE,
-    },
+    }
   ],
 })
 export class AppModule {}

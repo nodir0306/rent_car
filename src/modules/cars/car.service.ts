@@ -3,6 +3,7 @@ import { PgService } from "src/postgres/pg.service";
 import { createCarRequests, updateCarRequests } from "./interfaces";
 
 import { allGetFormatter } from "src/utils/api.feture";
+import { getMoviesQueriesDto } from "./dtos";
 export declare interface Car {
     id: number,
     name: string,
@@ -29,7 +30,7 @@ export class CarsService {
             throw new HttpException(error.response.message, error.response.statusCode);
         }
     }
-    async getAllCar(queryies: Record<string, string>): Promise<any>{
+    async getAllCar(queryies: getMoviesQueriesDto): Promise<any>{
         try {
             const query = new allGetFormatter('cars')
             .paginate(+queryies?.page ? +queryies?.page : 1, +queryies?.limit ? +queryies?.limit : 10)

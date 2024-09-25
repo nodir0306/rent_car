@@ -12,7 +12,9 @@ async function startApp() {
   app.useGlobalPipes(
     new ValidationPipe({
       exceptionFactory(errors) {
-        throw new BadRequestException(errors);
+        const errorMsgs = errors.map(err => Object.values(err.constraints).join(', '))
+        throw new BadRequestException(errorMsgs.join(' && '));
+     
       },
     }),
   );

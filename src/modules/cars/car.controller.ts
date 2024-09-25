@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseFilters } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, UseFilters } from "@nestjs/common";
 import { CarsService } from "./car.service";
 import { CreateCarDto, UpdateCarDto } from "./dtos";
 import { ExceptionHandleFilter } from "src/filters";
+import { ParseIntCustomPipe } from "@pipes";
 
 
 @Controller("cars")
@@ -20,7 +21,7 @@ export class CarsController {
     }
 
     @Get("/:carId")
-    async getOneCar(@Param("carId") carId: string): Promise<any>{
+    async getOneCar(@Param("carId", ParseIntCustomPipe) carId: string): Promise<any>{
         return this.carsService.getOneCar(+carId)
     }
 
