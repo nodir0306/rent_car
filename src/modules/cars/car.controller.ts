@@ -1,15 +1,19 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, UseFilters } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, UseFilters, UseGuards, UseInterceptors } from "@nestjs/common";
 import { CarsService } from "./car.service";
 import { CreateCarDto, UpdateCarDto } from "./dtos";
 import { ExceptionHandleFilter } from "src/filters";
-import { ParseIntCustomPipe } from "@pipes";
+import { CarTypeEnum, CheckEnum, ParseIntCustomPipe } from "@pipes";
+import { LoggingInterceptor } from "@inceptors";
+import { CheckRolesGuard } from "@guards";
+import { Roles } from "@decorators";
 
 
 @Controller("cars")
+@UseInterceptors(LoggingInterceptor)
 export class CarsController {
     constructor(private readonly carsService: CarsService){}
     
-
+    @Roles(["admin"])
     @Post()
     async createCar(@Body() createCarData: CreateCarDto): Promise<any>{
         return this.carsService.createCar(createCarData)
@@ -20,8 +24,9 @@ export class CarsController {
         return this.carsService.getAllCar(queryies)
     }
 
+
     @Get("/:carId")
-    async getOneCar(@Param("carId", ParseIntCustomPipe) carId: string): Promise<any>{
+    async getOneCar(@Param("carId", ParseIntPipe) carId: string): Promise<any>{
         return this.carsService.getOneCar(+carId)
     }
 

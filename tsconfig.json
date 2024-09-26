@@ -18,7 +18,10 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@pipes": ["./src/pipes"]
+      "@pipes": ["./src/pipes"],
+      "@inceptors": ["./src/inceptors"],
+      "@guards": ["./src/guards"],
+      "@decorators": ["./src/decorators"]
     }
   }
 }

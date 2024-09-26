@@ -1,13 +1,13 @@
 import { ArgumentMetadata, NotAcceptableException, PipeTransform } from "@nestjs/common";
 
 export class ParseIntCustomPipe implements PipeTransform{
-    #_defauldNUmber: number
+    #_defauldNumber: number
     constructor(defauldValue: number){
-        this.#_defauldNUmber = defauldValue
+        this.#_defauldNumber = defauldValue
     }
     transform(value: any, metadata: ArgumentMetadata) {
         const number = parseInt(value,10)
-        if(!value) return this.#_defauldNUmber
+        if(!value) return this.#_defauldNumber
         console.log(metadata.type,metadata.data, metadata.metatype)
         if(isNaN(number)){
             throw new NotAcceptableException(`${metadata.data} should be number`)
